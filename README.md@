@@ -1,0 +1,51 @@
+# MERN Blog App Deployment on AWS
+
+## 📌 Overview
+Deployed a MERN stack blog application using AWS services:
+- **Frontend**: React hosted on S3 (Static Website Hosting)
+- **Backend**: Express.js on EC2 (t3.micro)
+- **Database**: MongoDB Atlas (Free Tier)
+- **Media Storage**: S3 Bucket with IAM permissions
+
+## 🛠️ Deployment Steps
+
+### 1. S3 Bucket Setup
+- Created bucket `abdullah-blogapp-frontend` with:
+  ```json
+  {
+    "Version": "2012-10-17",
+    "Statement": [{
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::abdullah-blogapp-frontend/*"
+    }]
+  }
+  ```
+  ![S3 Config](screenshots/s3-config.png)
+
+### 2. EC2 Backend
+- Launched t3.micro in `eu-north-1`
+- Security Group rules:
+  | Type       | Port | Source      |
+  |------------|------|-------------|
+  | SSH        | 22   | My IP       |
+  | HTTP       | 5000 | 0.0.0.0/0   |
+
+### 3. MongoDB Atlas
+- Whitelisted EC2 IP
+- Connection string:
+  ```env
+  MONGODB=mongodb+srv://user:pass@cluster.mongodb.net/blog-app
+  ```
+
+## 🎯 Deliverables
+- [x] Frontend accessible via S3 URL
+- [x] Backend responds with 200 OK
+- [x] Media uploads working
+
+## 📸 Screenshots
+| Description          | Screenshot                      |
+|----------------------|---------------------------------|
+| Working Frontend     | ![Frontend](screenshots/frontend.png) |
+| PM2 Running          | ![PM2](screenshots/pm2.png)     |
